@@ -1,0 +1,21 @@
+{
+  "name": "FEDPractice",
+  "version": "0.0.1",
+  "authors": [
+    "chentongta <472206618@qq.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.0.0",
+    "jquery": "^1.9.0",
+    "underscore": "^1.8.0",
+    "vue": "^1.0.0"
+  }
+}

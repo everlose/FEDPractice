@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>位异或运算符加密</title>
+</head>
+<body>
+	<p>
+		利用位异或运算符对内容加密，原理: a = 1,b = 2, c = a ^ b为3，因为1=01，2=10，异或值为11于是c结果为3；
+		那么相同的，c ^ b 的值同样会是a；原文：http://jingyan.baidu.com/article/cbcede0737e7e702f50b4d65.html
+	</p>
+	<textarea name="" id="text" cols="30" rows="10">
+		
+	</textarea>
+	<div>
+		请输入密钥：<input type="text" id="keyt">
+	</div>
+	<button id="encrypt">加密</button>
+	<button id="decrypt">解密</button>
+	<p id="tip"></p>
+
+	<script>
+		var text = document.getElementById('text'),
+			keyt = document.getElementById('keyt'),
+			encrypt = document.getElementById('encrypt'),
+			decrypt = document.getElementById('decrypt'),
+			tip = document.getElementById('tip');
+
+		//核心加密算法，使用^异或处理原文的每个字符unicode字符编码。
+		var ff = function (original, keyt) {
+			var last = '',
+				text2;
+			for (var i = 0, orilen = original.length; i < orilen; i++) {
+				text2 = original.charCodeAt(i) ^ keyt ;
+				last += String.fromCharCode(text2);
+			}
+			return last;
+
+		};
+
+		encrypt.addEventListener('click', function(){
+			var p = text.value,
+				q = keyt.value,
+				x = ff(p, q),
+				ss = '加密成功，本次加密使用的密钥是：' + q  + '，请记牢密钥，方便下次解密';
+			text.value = x;
+			tip.innerHTML = ss;
+
+		});
+		decrypt.addEventListener('click', function(){
+			var p = text.value,
+				q = keyt.value,
+				x = ff(p, q),
+				ss = '解密成功，本次加密使用的密钥是：' + q;
+			text.value = x;
+			tip.innerHTML = ss;
+
+		});
+	</script>
+</body>
+</html>

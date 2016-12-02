@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>svg动画</title>
+	<style>
+		p {
+			margin-top: 10px;
+		}
+		div {
+			display: block;
+			width: 360px;
+			height: 200px;
+			
+		}
+	</style>
+</head>
+<body>
+	<p>1. 沿着山坡跑的马</p>
+	<!--
+		path属性为运动路径
+		begin与end代表开始时间，结束时间。时间值单位可以是h, min, s, ms。甚至支持特殊事件，诸如x.end, x.click
+		dur代表动画持续时间，可以为：常用时间值 | "indefinite"
+		repeatCount代表动画重复次数，可以为：合法数值或者"indefinite"
+	-->
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
+			<text x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" begin="0s" dur="3s" repeatCount="indefinite"/>
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+	
+	<p>2. 沿着山坡跑的马，并且自动旋转（加了rotate）</p>
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
+			<text x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" begin="0s" dur="3s" repeatCount="indefinite" rotate="auto"/>
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+	
+	<p>3. 控制马跑的速度</p>
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
+			<text x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" begin="0s" dur="3s" repeatCount="indefinite" rotate="auto" keyTimes="0; .8; 1" calcMode="spline"  keySplines=".5 0 .5 1; 0 0 1 1" />
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+
+	<p>4. 沿着山坡跑的马自动旋转,点击还能暂停，开始，使用svg.pauseAnimations();的api</p>
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg" onclick="pause(this)">
+			<script>
+				function pause(svg) {
+					if (svg.paused != true) { 
+						svg.pauseAnimations();
+						svg.paused = true;
+					} else  { 
+						svg.unpauseAnimations();
+						svg.paused = false; 
+					}
+				};
+				
+			</script>
+			<text id="text" x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" begin="0s" dur="3s" repeatCount="indefinite" rotate="auto"/>
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+	
+	<p>5. 沿着山坡跑的马自动旋转，并且点击圆点后才开始运动（改了begin）</p>
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
+			<circle id="circle5" cx="10" cy="10" r="10"></circle>
+			<text x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" dur="3s" repeatCount="indefinite" rotate="auto" begin="circle5.click"/>
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+	
+
+	<p>6. 沿着山坡跑的马自动旋转且只跑一次，并且点击圆点后才开始运动一次（加了restart属性）</p>
+	<!--
+		restart属性有三个值，always | whenNotActive | never
+		always是默认值，点击一次圆后马跑一下
+		whenNotActive表示动画正在进行的时候，是不能重启动画的。
+		never表示动画是一波流。。
+	-->
+	<div>
+		<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
+			<circle id="circle6" cx="10" cy="10" r="10"></circle>
+			<text x="0" y="0" style="fill:#cd0000;font-size:40px">马
+				<animateMotion path="M10,80 q100,120 120,20 q140,-50 160,0" dur="3s" repeatCount="1" rotate="auto" begin="circle6.click" restart="whenNotActive"/>
+			</text>
+			<path d="M10,80 q100,120 120,20 q140,-50 160,0" stroke="#cd0000" stroke-width="2" fill="none" />
+		</svg>
+	</div>
+
+	
+</body>
+</html>
